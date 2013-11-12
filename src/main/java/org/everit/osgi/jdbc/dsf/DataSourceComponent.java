@@ -38,34 +38,24 @@ import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.jdbc.DataSourceFactory;
+import org.osgi.service.log.LogService;
 
-@org.apache.felix.scr.annotations.Properties({
-        @Property(name = DataSourceFactory.JDBC_URL, value = "", label = "Jdbc Url",
-                description = "The Jdbc Url that will be provided during the DataSourceFactory.createXADataSource()"
-                        + " call."),
-
-        @Property(name = DataSourceFactory.JDBC_USER, value = "", label = "User name",
-                description = "The name of the user that is used during database authentication"),
-
-        @Property(name = DataSourceFactory.JDBC_PASSWORD, passwordValue = "", label = "Password",
-                description = "Password that is used during database access."),
-
-        @Property(name = DataSourceFactory.JDBC_DATASOURCE_NAME, value = "", label = "DataSource name",
-                description = "Name of the data source."),
-
-        @Property(name = DataSourceFactory.JDBC_DESCRIPTION, value = "", label = "DataSource description.",
-                description = "Description of the data source.") })
-@Component(label = "DataSource (Everit)", metatype = true, configurationFactory = true,
-        policy = ConfigurationPolicy.REQUIRE)
+@org.apache.felix.scr.annotations.Properties({ @Property(name = "dataSourceFactory.target"),
+        @Property(name = DataSourceFactory.JDBC_URL), @Property(name = DataSourceFactory.JDBC_USER),
+        @Property(name = DataSourceFactory.JDBC_PASSWORD, passwordValue = ""),
+        @Property(name = DataSourceFactory.JDBC_DATASOURCE_NAME), @Property(name = DataSourceFactory.JDBC_DESCRIPTION),
+        @Property(name = DSFUtil.PROP_LOGIN_TIMEOUT, intValue = 0), @Property(name = "logService.target") })
+@Component(metatype = true, configurationFactory = true, policy = ConfigurationPolicy.REQUIRE)
 public class DataSourceComponent {
 
-    @Property(name = "dataSourceFactory.target", label = "DataSourceFactory Service Filter",
-            description = "Filter of the DataSourceFactory OSGi service")
     @Reference(policy = ReferencePolicy.STATIC)
     private DataSourceFactory dataSourceFactory;
 
+    @Reference(policy = ReferencePolicy.STATIC)
+    private LogService logService;
+
     private ServiceRegistration<DataSource> serviceRegistration;
-    
+
     private Map<String, Object> dataSourceFactoryProperties;
 
     @Activate
@@ -77,6 +67,8 @@ public class DataSourceComponent {
 
             Hashtable<String, Object> serviceProperties =
                     DSFUtil.collectDataSourceServiceProperties(componentProperties, dataSourceFactoryProperties);
+            
+            DSFUtil.initializeDataSource(dataSource, componentProperties, logService);
 
             serviceRegistration = bundleContext.registerService(DataSource.class, dataSource, serviceProperties);
         } catch (SQLException e) {
@@ -88,6 +80,10 @@ public class DataSourceComponent {
     public void bindDataSourceFactory(DataSourceFactory dataSourceFactory, Map<String, Object> serviceProperties) {
         this.dataSourceFactory = dataSourceFactory;
         this.dataSourceFactoryProperties = serviceProperties;
+    }
+
+    public void bindLogService(LogService logService) {
+        this.logService = logService;
     }
 
     @Deactivate
