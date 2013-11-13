@@ -67,7 +67,7 @@ public class DataSourceComponent {
 
             Hashtable<String, Object> serviceProperties =
                     DSFUtil.collectDataSourceServiceProperties(componentProperties, dataSourceFactoryProperties);
-            
+
             DSFUtil.initializeDataSource(dataSource, componentProperties, logService);
 
             serviceRegistration = bundleContext.registerService(DataSource.class, dataSource, serviceProperties);

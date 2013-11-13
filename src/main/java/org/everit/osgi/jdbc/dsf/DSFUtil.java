@@ -64,15 +64,21 @@ public final class DSFUtil {
             Map<String, Object> dsfServiceProperties) {
         Hashtable<String, Object> serviceProperties = new Hashtable<String, Object>();
         putIfNotNull(componentProperties, serviceProperties, "service.pid");
-        putIfNotNull(componentProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_NAME);
-        putIfNotNull(componentProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_CLASS);
-        putIfNotNull(componentProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_VERSION);
         putVisibleProperties(componentProperties, serviceProperties);
 
         if (dsfServiceProperties != null) {
             putIfNotNull(dsfServiceProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_CLASS);
             putIfNotNull(dsfServiceProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_NAME);
             putIfNotNull(dsfServiceProperties, serviceProperties, DataSourceFactory.OSGI_JDBC_DRIVER_VERSION);
+            Object dsfServiceId = dsfServiceProperties.get("service.id");
+            if (dsfServiceId != null) {
+                serviceProperties.put("dataSourceFactory.service.id", dsfServiceId);
+            }
+            
+            Object dsfServicePId = dsfServiceProperties.get("service.pid");
+            if (dsfServicePId != null) {
+                serviceProperties.put("dataSourceFactory.service.pid", dsfServicePId);
+            }
         }
         return serviceProperties;
     }
