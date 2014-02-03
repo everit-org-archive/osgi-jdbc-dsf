@@ -1,25 +1,20 @@
-package org.everit.osgi.jdbc.dsf;
-
-/*
- * Copyright (c) 2011, Everit Kft.
+/**
+ * This file is part of Everit - DataSourceFactory Component.
  *
- * All rights reserved.
+ * Everit - DataSourceFactory Component is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
+ * Everit - DataSourceFactory Component is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Everit - DataSourceFactory Component.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.everit.osgi.jdbc.dsf;
 
 import java.sql.SQLException;
 import java.util.Hashtable;
@@ -51,15 +46,15 @@ public class DataSourceComponent {
     @Reference(policy = ReferencePolicy.STATIC)
     private DataSourceFactory dataSourceFactory;
 
+    private Map<String, Object> dataSourceFactoryProperties;
+
     @Reference(policy = ReferencePolicy.STATIC)
     private LogService logService;
 
     private ServiceRegistration<DataSource> serviceRegistration;
 
-    private Map<String, Object> dataSourceFactoryProperties;
-
     @Activate
-    public void activate(BundleContext bundleContext, Map<String, Object> componentProperties) {
+    public void activate(final BundleContext bundleContext, final Map<String, Object> componentProperties) {
         Properties jdbcProps = DSFUtil.collectDataSourceProperties(componentProperties);
 
         try {
@@ -77,12 +72,13 @@ public class DataSourceComponent {
         }
     }
 
-    public void bindDataSourceFactory(DataSourceFactory dataSourceFactory, Map<String, Object> serviceProperties) {
+    public void bindDataSourceFactory(final DataSourceFactory dataSourceFactory,
+            final Map<String, Object> serviceProperties) {
         this.dataSourceFactory = dataSourceFactory;
         this.dataSourceFactoryProperties = serviceProperties;
     }
 
-    public void bindLogService(LogService logService) {
+    public void bindLogService(final LogService logService) {
         this.logService = logService;
     }
 

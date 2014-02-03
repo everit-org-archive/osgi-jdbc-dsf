@@ -1,156 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2011, Everit Kft.
+    This file is part of Everit - DataSourceFactory Component.
 
-    All rights reserved.
+    Everit - DataSourceFactory Component is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 3 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
+    Everit - DataSourceFactory Component is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-    MA 02110-1301  USA
+    You should have received a copy of the GNU Lesser General Public License
+    along with Everit - DataSourceFactory Component.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.everit</groupId>
-        <artifactId>oss</artifactId>
-        <version>4</version>
-    </parent>
+  <parent>
+    <groupId>org.everit.config</groupId>
+    <artifactId>org.everit.config.oss</artifactId>
+    <version>5.0.0</version>
+  </parent>
 
-    <groupId>org.everit.osgi</groupId>
-    <artifactId>org.everit.osgi.jdbc.dsf</artifactId>
-    <version>1.0.0-alpha1</version>
-    <packaging>bundle</packaging>
-    <name>DataSourceFactory configuration component</name>
-    <description>A simple component that makes it possible to create DataSource or XADataSource based on configuration with the help of DataSourceFactory.</description>
+  <groupId>org.everit.osgi</groupId>
+  <artifactId>org.everit.osgi.jdbc.dsf</artifactId>
+  <version>1.0.0-alpha2</version>
 
-    <properties>
-        <projectpath>osgi-jdbc-dsf</projectpath>
-    </properties>
+  <packaging>bundle</packaging>
 
-    <scm>
-        <connection>scm:git:git://github.com/everit-org/${projectpath}.git</connection>
-        <developerConnection>scm:git:https://github.com/everit-org/${projectpath}.git</developerConnection>
-        <url>https://github.com/everit-org/${projectpath}</url>
-    </scm>
-    <url>${everit.public.site.url}/mvnsites/${projectpath}</url>
-    <distributionManagement>
-        <site>
-            <id>everit.org</id>
-            <url>dav:${everit.public.site.url}/mvnsites/${projectpath}</url>
-        </site>
-    </distributionManagement>
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>https://ci.everit.biz/jenkins/job/${projectpath}</url>
-    </ciManagement>
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/everit-org/${projectpath}/issues</url>
-    </issueManagement>
+  <name>Everit - DataSourceFactory Component</name>
+  <description>A simple component that makes it possible to create DataSource or XADataSource based on configuration with the help of DataSourceFactory.</description>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.4.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Import-Package>*</Import-Package>
-                        <Export-Package />
-                    </instructions>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-scr-plugin</artifactId>
-                <version>1.15.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-scr-scrdescriptor</id>
-                        <goals>
-                            <goal>scr</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License v3.0</name>
+      <url>http://opensource.org/licenses/lgpl-3.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr.annotations</artifactId>
-            <version>1.9.6</version>
-        </dependency>
+  <scm>
+    <connection>scm:git:git://github.com/everit-org/osgi-jdbc-dsf.git</connection>
+    <developerConnection>scm:git:https://github.com/everit-org/osgi-jdbc-dsf.git</developerConnection>
+    <url>https://github.com/everit-org/osgi-jdbc-dsf</url>
+  </scm>
+  <url>${everit.public.site.url}</url>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>https://ci.everit.biz/jenkins/job/osgi-jdbc-dsf</url>
+  </ciManagement>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/everit-org/osgi-jdbc-dsf/issues</url>
+  </issueManagement>
 
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr.generator</artifactId>
-            <version>1.8.2</version>
-        </dependency>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.4.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Import-Package>*</Import-Package>
+            <Export-Package />
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-scr-plugin</artifactId>
+        <version>1.15.0</version>
+        <executions>
+          <execution>
+            <id>generate-scr-scrdescriptor</id>
+            <goals>
+              <goal>scr</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-        <dependency>
-            <groupId>org.ow2.spec.osgi</groupId>
-            <artifactId>ow2-jdbc-service-1.0-spec</artifactId>
-            <version>1.0.13</version>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.scr.annotations</artifactId>
+      <version>1.9.6</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>4.3.1</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.scr.generator</artifactId>
+      <version>1.8.2</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <version>4.3.1</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <dependency>
+      <groupId>org.ow2.spec.osgi</groupId>
+      <artifactId>ow2-jdbc-service-1.0-spec</artifactId>
+      <version>1.0.13</version>
+    </dependency>
 
-    <repositories>
-        <repository>
-            <id>everit.groups.public</id>
-            <name>Everit Public Repository Group</name>
-            <url>http://repository.everit.biz/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>everit.groups.proxy</id>
-            <name>Everit Proxy Repository Group</name>
-            <url>http://repository.everit.biz/nexus/content/groups/proxy</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>4.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>4.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>
