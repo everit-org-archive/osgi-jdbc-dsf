@@ -30,7 +30,7 @@
 
   <groupId>org.everit.osgi</groupId>
   <artifactId>org.everit.osgi.jdbc.dsf</artifactId>
-  <version>1.0.0-alpha2</version>
+  <version>1.0.0</version>
 
   <packaging>bundle</packaging>
 
@@ -50,7 +50,7 @@
     <developerConnection>scm:git:https://github.com/everit-org/osgi-jdbc-dsf.git</developerConnection>
     <url>https://github.com/everit-org/osgi-jdbc-dsf</url>
   </scm>
-  <url>${everit.public.site.url}</url>
+  <url>http://everit.org</url>
   <ciManagement>
     <system>Jenkins</system>
     <url>https://ci.everit.biz/jenkins/job/osgi-jdbc-dsf</url>
@@ -59,6 +59,22 @@
     <system>GitHub</system>
     <url>https://github.com/everit-org/osgi-jdbc-dsf/issues</url>
   </issueManagement>
+
+  <organization>
+    <name>Everit Kft.</name>
+    <url>http://www.everit.biz</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Everit Team</name>
+    </developer>
+  </developers>
+  
+  <properties>
+    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.compiler.target>1.5</maven.compiler.target>
+  </properties>
 
   <build>
     <plugins>
@@ -87,6 +103,13 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr.generator</artifactId>
+            <version>1.8.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
@@ -96,18 +119,6 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.scr.annotations</artifactId>
       <version>1.9.6</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.scr.generator</artifactId>
-      <version>1.8.2</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.ow2.spec.osgi</groupId>
-      <artifactId>ow2-jdbc-service-1.0-spec</artifactId>
-      <version>1.0.13</version>
     </dependency>
 
     <dependency>
