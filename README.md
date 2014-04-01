@@ -1,4 +1,5 @@
 osgi-xadatasource
 =================
 
-A simple component that makes it possible to create XADataSource based on configuration
+Simple components that makes it possible to create DataSource and
+XADataSource using DataSourceFactory via ConfigAdmin. 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Everit - DataSourceFactory Component.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.everit.osgi.jdbc.dsf;
+package org.everit.osgi.jdbc.dsf.internal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,6 +27,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.sql.CommonDataSource;
 
+import org.everit.osgi.jdbc.dsf.DSFConstants;
+import org.osgi.service.component.ComponentException;
 import org.osgi.service.jdbc.DataSourceFactory;
 import org.osgi.service.log.LogService;
 
@@ -122,9 +124,43 @@ public final class DSFUtil {
     private static void putVisibleProperties(final Map<String, Object> source,
             final Hashtable<? super String, Object> target) {
         putIfNotNull(source, target, DataSourceFactory.JDBC_URL);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_NETWORK_PROTOCOL);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_SERVER_NAME);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_PORT_NUMBER);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_DATABASE_NAME);
         putIfNotNull(source, target, DataSourceFactory.JDBC_USER);
         putIfNotNull(source, target, DataSourceFactory.JDBC_DATASOURCE_NAME);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_ROLE_NAME);
         putIfNotNull(source, target, DataSourceFactory.JDBC_DESCRIPTION);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_MAX_IDLE_TIME);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_MAX_STATEMENTS);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_PROPERTY_CYCLE);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_INITIAL_POOL_SIZE);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_MIN_POOL_SIZE);
+        putIfNotNull(source, target, DataSourceFactory.JDBC_MAX_POOL_SIZE);
+
+        Object customPropertiesObj = source.get(DSFConstants.PROP_CUSTOM_PROPERTIES);
+        if (customPropertiesObj == null) {
+            return;
+        }
+        if (!(customPropertiesObj instanceof String[])) {
+            throw new ComponentException(DSFConstants.PROP_CUSTOM_PROPERTIES
+                    + " property must have the type String[]: " + customPropertiesObj.getClass().getName());
+        }
+        String[] customProperties = (String[]) customPropertiesObj;
+        for (String customProperty : customProperties) {
+            if (customProperty != null && !"".equals(customProperty.trim())) {
+                int indexOfEquals = customProperty.indexOf('=');
+                if (indexOfEquals < 1) {
+                    throw new ComponentException("Invalid syntax for custom property: " + customProperty);
+                }
+                if (!(indexOfEquals == customProperty.length() - 1)) {
+                    String key = customProperty.substring(0, indexOfEquals);
+                    String value = customProperty.substring(indexOfEquals + 1, customProperty.length());
+                    target.put(key, value);
+                }
+            }
+        }
     }
 
     private DSFUtil() {
